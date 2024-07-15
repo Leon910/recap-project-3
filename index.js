@@ -9,6 +9,7 @@ const navigation = document.querySelector('[data-js="navigation"]');
 const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
+const searchInput = document.querySelector('[data-js="search-bar__input"]');
 
 // States
 let maxPage = 1;
@@ -55,3 +56,20 @@ nextButton.addEventListener("click", () => {
 function updatePagination() {
   pagination.textContent = `${page} / ${maxPage}`;
 }
+
+searchBar.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(searchBar);
+  searchQuery = formData.get("query").trim();
+  page = 1;
+  fetchCharacters();
+});
+
+searchInput.addEventListener("input", (event) => {
+  const query = event.target.value.trim();
+  if (query === "") {
+    searchQuery = "";
+    page = 1;
+    fetchCharacters();
+  }
+});
