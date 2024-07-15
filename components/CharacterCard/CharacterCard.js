@@ -1,12 +1,12 @@
-export function CharacterCard({ image, name, status, type, occurrences }) {
+export function CharacterCard({ image, name, status, type, episode }) {
   const card = document.createElement("li");
 
   card.classList.add("card");
   card.innerHTML = `<div class="card__image-container">
-            <img
+          <img
               class="card__image"
-              src="${image}"
-              alt="${name}"
+              src=${image}
+              alt=${name}
             />
             <div class="card__image-gradient"></div>
           </div>
@@ -18,11 +18,9 @@ export function CharacterCard({ image, name, status, type, occurrences }) {
               <dt class="card__info-title">Type</dt>
               <dd class="card__info-description">${type}</dd>
               <dt class="card__info-title">Occurrences</dt>
-              <dd class="card__info-description">${occurrences}</dd>
+              <dd class="card__info-description">${episode.length}</dd>
             </dl>
           </div>`;
-  console.log(card);
+
   return card;
 }
-
-console.log(CharacterCard());
