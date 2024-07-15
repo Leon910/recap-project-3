@@ -34,5 +34,24 @@ async function fetchCharacters() {
   } catch (error) {
     console.error("Could not fetch data", error);
   }
+  updatePagination();
 }
 fetchCharacters();
+
+prevButton.addEventListener("click", () => {
+  if (page > 1) {
+    page--;
+    fetchCharacters();
+  }
+});
+
+nextButton.addEventListener("click", () => {
+  if (page < maxPage) {
+    page++;
+    fetchCharacters();
+  }
+});
+
+function updatePagination() {
+  pagination.textContent = `${page} / ${maxPage}`;
+}
