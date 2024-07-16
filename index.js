@@ -30,7 +30,7 @@ async function fetchCharacters() {
     maxPage = data.info.pages;
     console.log(maxPage);
     cardContainer.innerHTML = "";
-    test.textContent = `${page} / ${maxPage}`;
+    pagination.textContent = `${page} / ${maxPage}`;
     data.results.forEach((character) => {
       const cardElement = CharacterCard(character);
       cardContainer.append(cardElement);
@@ -41,8 +41,8 @@ async function fetchCharacters() {
 }
 
 fetchCharacters();
-const test = NavPagination(page, maxPage);
-navigation.append(test);
+const pagination = NavPagination(page, maxPage);
+navigation.append(pagination);
 
 const previousClick = () => {
   if (page > 1) {
