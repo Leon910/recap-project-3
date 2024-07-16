@@ -42,7 +42,6 @@ async function fetchCharacters() {
 
 fetchCharacters();
 const pagination = NavPagination(page, maxPage);
-navigation.append(pagination);
 
 const previousClick = () => {
   if (page > 1) {
@@ -58,14 +57,10 @@ const nextClick = () => {
   }
 };
 
-console.log(previousClick());
-
 const previousButton = NavButton("previous", previousClick);
 const nextButton = NavButton("next", nextClick);
 
-navigation.append(previousButton, nextButton);
-
-fetchCharacters();
+navigation.append(previousButton, pagination, nextButton);
 
 // function updatePagination() {
 //   pagination.textContent = `${page} / ${maxPage}`;
