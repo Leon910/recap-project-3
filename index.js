@@ -1,4 +1,6 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
+import { NavButton } from "./components/NavButton/NavButton.js";
+import { NavPagination } from "./components/NavPagination/NavPagination.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -6,8 +8,8 @@ const searchBarContainer = document.querySelector(
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
+// const prevButton = document.querySelector('[data-js="button-prev"]');
+// const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 const searchInput = document.querySelector('[data-js="search-bar__input"]');
 
@@ -28,6 +30,7 @@ async function fetchCharacters() {
     maxPage = data.info.pages;
     console.log(maxPage);
     cardContainer.innerHTML = "";
+
     data.results.forEach((character) => {
       const cardElement = CharacterCard(character);
       cardContainer.append(cardElement);
@@ -35,27 +38,38 @@ async function fetchCharacters() {
   } catch (error) {
     console.error("Could not fetch data", error);
   }
-  updatePagination();
+
+  const test = NavPagination(page, maxPage);
+  navigation.append(test);
 }
 fetchCharacters();
 
-prevButton.addEventListener("click", () => {
+const previousClick = () => {
   if (page > 1) {
     page--;
     fetchCharacters();
   }
-});
+};
 
-nextButton.addEventListener("click", () => {
+const nextClick = () => {
   if (page < maxPage) {
     page++;
     fetchCharacters();
   }
-});
+};
 
-function updatePagination() {
-  pagination.textContent = `${page} / ${maxPage}`;
-}
+console.log(previousClick());
+
+const previousButton = NavButton("previous", previousClick);
+const nextButton = NavButton("next", nextClick);
+
+navigation.append(previousButton, nextButton);
+
+fetchCharacters();
+
+// function updatePagination() {
+//   pagination.textContent = `${page} / ${maxPage}`;
+// }
 
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
