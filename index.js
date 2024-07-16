@@ -1,17 +1,18 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
 import { NavButton } from "./components/NavButton/NavButton.js";
 import { NavPagination } from "./components/NavPagination/NavPagination.js";
+import { searchBar } from "./components/SearchBar/SearchBar.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-const searchBar = document.querySelector('[data-js="search-bar"]');
+//const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
 // const prevButton = document.querySelector('[data-js="button-prev"]');
 // const nextButton = document.querySelector('[data-js="button-next"]');
 // const pagination = document.querySelector('[data-js="pagination"]');
-const searchInput = document.querySelector('[data-js="search-bar__input"]');
+//const searchInput = document.querySelector('[data-js="search-bar__input"]');
 
 // States
 let maxPage = 1;
@@ -62,11 +63,25 @@ const nextButton = NavButton("next", nextClick);
 
 navigation.append(previousButton, pagination, nextButton);
 
+searchBarContainer.append(
+  searchBar((event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const query = event.target.value;
+    searchQuery = formData.get("query").trim();
+    if (query === "") {
+      searchQuery = "";
+      page = 1;
+    }
+    fetchCharacters();
+  })
+);
+
 // function updatePagination() {
 //   pagination.textContent = `${page} / ${maxPage}`;
 // }
 
-searchBar.addEventListener("submit", (event) => {
+/*searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(searchBar);
   searchQuery = formData.get("query").trim();
@@ -81,4 +96,4 @@ searchInput.addEventListener("input", (event) => {
     page = 1;
     fetchCharacters();
   }
-});
+});*/
