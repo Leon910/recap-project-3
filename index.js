@@ -29,7 +29,6 @@ async function fetchCharacters() {
     console.log(response);
     const data = await response.json();
     maxPage = data.info.pages;
-    console.log(maxPage);
     cardContainer.innerHTML = "";
     pagination.textContent = `${page} / ${maxPage}`;
     data.results.forEach((character) => {
@@ -64,18 +63,23 @@ const nextButton = NavButton("next", nextClick);
 navigation.append(previousButton, pagination, nextButton);
 
 searchBarContainer.append(
-  searchBar((event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const query = event.target.value;
-    searchQuery = formData.get("query").trim();
-    if (query === "") {
-      searchQuery = "";
+  searchBar(
+    (submitEvent) => {
+      submitEvent.preventDefault();
+      const formData = new FormData(event.target);
+      const query = formData.get("query").trim();
+      searchQuery = query;
+      fetchCharacters();
+    },
+    (inputEvent) => {
+      searchQuery = inputEvent;
       page = 1;
+      fetchCharacters();
     }
-    fetchCharacters();
-  })
+  )
 );
+
+fetchCharacters();
 
 // function updatePagination() {
 //   pagination.textContent = `${page} / ${maxPage}`;

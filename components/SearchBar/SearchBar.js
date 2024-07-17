@@ -1,4 +1,4 @@
-export function searchBar(onSubmit) {
+export function searchBar(onSubmit, onInput) {
   const form = document.createElement("form");
   form.classList.add("search-bar");
   form.dataset.js = "search-bar";
@@ -19,5 +19,13 @@ export function searchBar(onSubmit) {
     />
   </button>`;
   form.addEventListener("submit", onSubmit);
+
+  const input = form.querySelector('[data-js="search-bar__input"]');
+  input.addEventListener("input", (event1) => {
+    const query = event1.target.value.trim();
+    if (query === "") {
+      onInput(query);
+    }
+  });
   return form;
 }
